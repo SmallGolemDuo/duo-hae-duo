@@ -1,2 +1,75 @@
-package com.deux.duohaeduo.dto;public class ChampionPayload {
+package com.deux.duohaeduo.dto;
+
+import com.deux.duohaeduo.dto.request.ChampionRequest;
+import com.deux.duohaeduo.entity.Champion;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Getter
+@Builder
+@AllArgsConstructor
+public class ChampionPayload {
+
+    private Long id;
+
+    private final String championName;
+
+    private String championType;
+
+    private String ultimateType;
+
+    private String difficulty;
+
+    private String skillDetails;
+
+    private String attackType;
+
+    private String damageType;
+
+    private String position;
+
+    private int keywordCount;
+
+    public static ChampionPayload from(Champion champion) {
+        return ChampionPayload.builder()
+                .id(champion.getId())
+                .championName(champion.getChampionName())
+                .championType(champion.getChampionType())
+                .difficulty(champion.getDifficulty())
+                .damageType(champion.getDamageType())
+                .attackType(champion.getAttackType())
+                .ultimateType(champion.getUltimateType())
+                .skillDetails(champion.getSkillDetails())
+                .position(champion.getPosition())
+                .build();
+    }
+
+    public static List<ChampionPayload> fromList(List<Champion> champions) {
+        return champions.stream()
+                .map(ChampionPayload::from)
+                .collect(Collectors.toList());
+    }
+
+    public void verifyKeyword(ChampionRequest championRequest) {
+        if (this.ultimateType.equals(championRequest.getUltimateType())) {
+            keywordCount++;
+        }
+        if (this.difficulty.equals(championRequest.getDifficulty())) {
+            keywordCount++;
+        }
+        if (this.skillDetails.equals(championRequest.getSkillDetails())) {
+            keywordCount++;
+        }
+        if (this.attackType.equals(championRequest.getAttackType())) {
+            keywordCount++;
+        }
+        if (this.damageType.equals(championRequest.getDamageType())) {
+            keywordCount++;
+        }
+    }
+
 }

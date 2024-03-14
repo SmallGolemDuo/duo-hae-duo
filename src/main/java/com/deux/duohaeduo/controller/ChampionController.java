@@ -1,22 +1,21 @@
 package com.deux.duohaeduo.controller;
 
-import com.deux.duohaeduo.dto.response.AnswerResponse;
+import com.deux.duohaeduo.dto.request.ChampionRequest;
+import com.deux.duohaeduo.dto.response.ChampionResponse;
+import com.deux.duohaeduo.service.ChampionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/answers")
-public class AnswerController {
+@RequestMapping("/api/champions")
+public class ChampionController {
 
-    private final AnswerService answerService;
+    private final ChampionService championService;
 
-    @PostMapping("/{questionId}")
-    public AnswerResponse findById(@PathVariable("questionId") Long questionId) {
-        return answerService.findById(questionId);
+    @PostMapping
+    public ChampionResponse findByChampion(@RequestBody ChampionRequest championRequest) {
+        return championService.findByChampion(championRequest);
     }
 
 }
