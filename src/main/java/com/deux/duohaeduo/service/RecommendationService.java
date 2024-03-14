@@ -1,6 +1,7 @@
 package com.deux.duohaeduo.service;
 
-import com.deux.duohaeduo.dto.response.QuestionResponse;
+import com.deux.duohaeduo.dto.response.RecommendationResponse;
+import com.deux.duohaeduo.repository.ChampionRepository;
 import com.deux.duohaeduo.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,13 +11,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class QuestionService {
+public class ChampionService {
 
+    private final ChampionRepository championRepository;
     private final QuestionRepository questionRepository;
 
     @Transactional(readOnly = true)
-    public List<QuestionResponse> findAll() {
-        return QuestionResponse.fromList(questionRepository.findAll());
+    public List<RecommendationResponse> findAll() {
+        return RecommendationResponse.fromList(questionRepository.findAll());
     }
 
 }
