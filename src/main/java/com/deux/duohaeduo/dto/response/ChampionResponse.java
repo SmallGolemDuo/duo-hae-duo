@@ -3,13 +3,11 @@ package com.deux.duohaeduo.dto.response;
 import com.deux.duohaeduo.dto.ChampionPayload;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @Getter
 @Builder
-@RequiredArgsConstructor
 public class ChampionResponse {
 
     private final List<ChampionPayload> championPayload;
