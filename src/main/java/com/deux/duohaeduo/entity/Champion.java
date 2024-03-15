@@ -13,7 +13,9 @@ public class Champion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private final String championName;
+    private final String championNameKor;
+
+    private final String championNameEng;
 
     private String championType;
 

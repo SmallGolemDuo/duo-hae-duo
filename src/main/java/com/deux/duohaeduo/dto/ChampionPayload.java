@@ -16,7 +16,9 @@ public class ChampionPayload {
 
     private Long id;
 
-    private final String championName;
+    private final String championNameKor;
+
+    private final String championNameEng;
 
     private String championType;
 
@@ -37,7 +39,8 @@ public class ChampionPayload {
     public static ChampionPayload from(Champion champion) {
         return ChampionPayload.builder()
                 .id(champion.getId())
-                .championName(champion.getChampionName())
+                .championNameKor(champion.getChampionNameKor())
+                .championNameEng(champion.getChampionNameEng())
                 .championType(champion.getChampionType())
                 .difficulty(champion.getDifficulty())
                 .damageType(champion.getDamageType())
