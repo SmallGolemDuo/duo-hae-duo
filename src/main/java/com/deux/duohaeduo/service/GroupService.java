@@ -3,7 +3,22 @@ package com.deux.duohaeduo.service;
 import com.deux.duohaeduo.dto.*;
 import com.deux.duohaeduo.dto.matchInfo.Participant;
 import com.deux.duohaeduo.dto.matchInfo.SummonerMatchInfo;
+import com.deux.duohaeduo.dto.request.AddGroupMemberRequest;
+import com.deux.duohaeduo.dto.request.CreateGroupRequest;
+import com.deux.duohaeduo.dto.request.DeleteGroupMemberRequest;
+import com.deux.duohaeduo.dto.request.DeleteGroupRequest;
+import com.deux.duohaeduo.dto.response.CreateGroupResponse;
+import com.deux.duohaeduo.dto.response.FindAllGroupResponse;
+import com.deux.duohaeduo.dto.response.FindByIdGroupResponse;
+import com.deux.duohaeduo.dto.response.FindGroupInfoResponse;
+import com.deux.duohaeduo.entity.Group;
+import com.deux.duohaeduo.entity.GroupMember;
 import com.deux.duohaeduo.enums.SummonerSpells;
+import com.deux.duohaeduo.excpetion.group.GroupMemberCountExceedException;
+import com.deux.duohaeduo.excpetion.group.GroupMemberNotFoundException;
+import com.deux.duohaeduo.excpetion.group.GroupNotFoundException;
+import com.deux.duohaeduo.repository.GroupRepository;
+import com.deux.duohaeduo.service.webClient.RiotService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONException;
@@ -11,15 +26,109 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
 @RequiredArgsConstructor
 public class GroupService {
+
+    private final GroupRepository groupRepository;
+
+    private final RiotService riotService;
+
+    // 그룹안에 유저 전체 정보 조회
+    @Transactional
+    public FindGroupInfoResponse findGroupInfo(Long groupId) throws IOException, JSONException {
+        Group group = groupRepository.findById(groupId).orElseThrow(GroupNotFoundException::new);
+        long matchCount = 5L;
+        Set<ConvertedRiotData> convertedRiotDatas = new HashSet<>();
+        long gameMemberCount = 1L;
+        for (GroupMember groupMember : group.getGroupMembers()) {
+
+            // 닉네임 태그 분리
+            List<String> nicknameAndTag = List.of(groupMember.getName().split("#"));
+
+            String nickname = nicknameAndTag.get(0);
+            String tag; // 태그 입력 안할 시 기본 태그 주입
+            if (nicknameAndTag.size() != 1) {
+                tag = nicknameAndTag.get(1);
+            } else {
+                tag = "KR1";
+            }
+
+            FindGameMemberInfo findGameMemberInfo = riotService.findRiotGameMemberInfo(nickname, tag, gameMemberCount, matchCount);
+            gameMemberCount++;
+            convertedRiotDatas.add(convertRiotSummonerInfo(findGameMemberInfo));
+        }
+
+        return new FindGroupInfoResponse(convertedRiotDatas);
+    }
+
+    // 그룹 만들기 + 게임유저 추가
+    @Transactional
+    public CreateGroupResponse createGroup(CreateGroupRequest createGroupRequest) {
+        return CreateGroupResponse.of(groupRepository.save(createGroupRequest.toEntity()));
+    }
+
+    // 그룹 전체 조회
+    @Transactional
+    public List<FindAllGroupResponse> findAllGroup() {
+        return groupRepository.findAll().stream()
+                .map(FindAllGroupResponse::from)
+                .collect(Collectors.toList());
+    }
+
+    // 그룹 상세 조회
+    @Transactional
+    public FindByIdGroupResponse findById(Long groupId) {
+        return FindByIdGroupResponse.from(groupRepository.findById(groupId).orElseThrow(GroupNotFoundException::new));
+    }
+
+    // 그룹 삭제
+    @Transactional
+    public boolean deleteGroup(DeleteGroupRequest deleteGroupRequest) {
+        Group group = groupRepository.findById(deleteGroupRequest.getGroupId()).orElseThrow(GroupNotFoundException::new);
+        groupRepository.delete(group);
+        return true;
+    }
+
+    // 이미 존재하는 그룹에 유저 추가
+    @Transactional
+    public boolean addGroupGameMember(AddGroupMemberRequest addGroupGameMemberRequest) {
+        Group group = groupRepository.findById(addGroupGameMemberRequest.getGroupId()).orElseThrow(GroupNotFoundException::new);
+
+        if (group.getGroupMembers().size() >= 5) {
+            throw new GroupMemberCountExceedException();
+        }
+
+        GroupMember groupMember = addGroupGameMemberRequest.toEntity(group);
+
+        Set<GroupMember> groupMembers = group.getGroupMembers();
+        groupMembers.add(groupMember);
+        group.addGroupMembers(groupMembers);
+
+        groupRepository.save(group);
+
+        return true;
+    }
+
+    // 그룹안에 게임유저 삭제
+    @Transactional
+    public boolean deleteGroupGameMember(DeleteGroupMemberRequest deleteGroupMemberRequest) {
+        Group group = groupRepository.findById(deleteGroupMemberRequest.getGroupId()).orElseThrow(GroupNotFoundException::new);
+
+        if (!group.containsGroupMemberId(deleteGroupMemberRequest.getGroupMemberId())) {
+            throw new GroupMemberNotFoundException();
+        }
+
+        group.deleteGroupMember(deleteGroupMemberRequest.getGroupMemberId());
+        groupRepository.save(group);
+        return true;
+    }
 
 
     // 날짜, 게임 모드, 게임 시간, 검색자아이템, 게임참가사람들 닉네임과 챔피언 승패여부, 킬뎃어시, 스팰
