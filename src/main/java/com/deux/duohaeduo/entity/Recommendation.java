@@ -23,6 +23,6 @@ public class Recommendation {
     @Column(name = "answer_value")
     @MapKeyColumn(name = "answer_key")
     @CollectionTable(name = "recommendation_answers", joinColumns = @JoinColumn(name = "recommendation_id"))
-    private final Map<String, String> answers;
+    private final Map<String, String> answers = new HashMap<>();
 
 }
