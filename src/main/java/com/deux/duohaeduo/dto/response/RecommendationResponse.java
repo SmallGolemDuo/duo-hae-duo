@@ -4,8 +4,7 @@ import com.deux.duohaeduo.entity.Recommendation;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @Getter
 @Builder
@@ -15,17 +14,14 @@ public class RecommendationResponse {
 
     private final String question;
 
+    private final Map<String, String> answers;
+
     public static RecommendationResponse from(Recommendation recommendation) {
         return RecommendationResponse.builder()
                 .id(recommendation.getId())
                 .question(recommendation.getQuestion())
+                .answers(recommendation.getAnswers())
                 .build();
-    }
-
-    public static List<RecommendationResponse> fromList(List<Recommendation> recommendations) {
-        return recommendations.stream()
-                .map(RecommendationResponse::from)
-                .collect(Collectors.toList());
     }
 
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/champions")
+@RequestMapping("/api/lol/champions")
 public class ChampionController {
 
     private final ChampionService championService;

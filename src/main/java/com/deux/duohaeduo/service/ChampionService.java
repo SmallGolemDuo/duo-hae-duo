@@ -22,7 +22,8 @@ public class ChampionService {
 
     @Transactional(readOnly = true)
     public ChampionResponse findByChampion(ChampionRequest championRequest) {
-        List<ChampionPayload> championPayloads = ChampionPayload.fromList(championRepository.findByChampionType(championRequest.getChampionType()));
+        List<ChampionPayload> championPayloads = championRepository.findByChampionType(championRequest.getChampionType())
+                .stream().map(ChampionPayload::from).collect(Collectors.toList());
         for (ChampionPayload champion : championPayloads) {
             champion.verifyKeyword(championRequest);
         }

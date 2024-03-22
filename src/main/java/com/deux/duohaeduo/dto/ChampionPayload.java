@@ -6,9 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Getter
 @Builder
 @AllArgsConstructor
@@ -49,12 +46,6 @@ public class ChampionPayload {
                 .skillDetails(champion.getSkillDetails())
                 .position(champion.getPosition())
                 .build();
-    }
-
-    public static List<ChampionPayload> fromList(List<Champion> champions) {
-        return champions.stream()
-                .map(ChampionPayload::from)
-                .collect(Collectors.toList());
     }
 
     public void verifyKeyword(ChampionRequest championRequest) {
