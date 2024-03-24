@@ -1,16 +1,14 @@
 package com.deux.duohaeduo.dto.request;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
-@Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChampionRequest {
 
-    private final List<String> recommendItems;
+    private List<String> recommendItems;
 
 }
