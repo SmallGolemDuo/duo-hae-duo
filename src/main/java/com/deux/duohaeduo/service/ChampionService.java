@@ -22,12 +22,11 @@ public class ChampionService {
 
     @Transactional(readOnly = true)
     public ChampionResponse findByChampion(ChampionRequest championRequest) {
-        List<ChampionPayload> championPayloads = ChampionPayload.fromList(championRepository.findByChampionType(championRequest.getChampionType()));
-        for (ChampionPayload champion : championPayloads) {
-            champion.verifyKeyword(championRequest);
-        }
-        championPayloads.sort(Comparator.comparing(ChampionPayload::getKeywordCount).reversed());
-        return ChampionResponse.from(getChampions(findMaximumKeywordChampions(championPayloads)));
+        List<ChampionPayload> champions = championRepository.findByChampionType(championRequest.getRecommendItems().get(FIRST_INDEX))
+                .stream().map(ChampionPayload::from).collect(Collectors.toList());
+        champions.forEach(champion -> champion.verifyKeyword(championRequest.getRecommendItems()));
+        champions.sort(Comparator.comparingInt(ChampionPayload::getKeywordCount).reversed());
+        return ChampionResponse.from(getChampions(findMaximumKeywordChampions(champions)));
     }
 
     /**
