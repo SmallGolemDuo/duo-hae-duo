@@ -1,5 +1,6 @@
 package com.deux.duohaeduo.dto.request;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
@@ -7,8 +8,9 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChampionRequest {
+public class FindChampionRequest {
 
-    private List<String> recommendItems;
+    @NotNull
+    private List<String> answers;
 
 }

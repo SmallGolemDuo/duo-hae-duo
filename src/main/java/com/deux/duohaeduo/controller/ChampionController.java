@@ -1,7 +1,7 @@
 package com.deux.duohaeduo.controller;
 
-import com.deux.duohaeduo.dto.request.ChampionRequest;
-import com.deux.duohaeduo.dto.response.ChampionResponse;
+import com.deux.duohaeduo.dto.request.FindChampionRequest;
+import com.deux.duohaeduo.dto.response.FindChampionResponse;
 import com.deux.duohaeduo.service.ChampionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +14,8 @@ public class ChampionController {
     private final ChampionService championService;
 
     @PostMapping
-    public ChampionResponse findByChampion(@RequestBody ChampionRequest championRequest) {
-        return championService.findByChampion(championRequest);
+    public FindChampionResponse findByChampion(@RequestBody FindChampionRequest findChampionRequest) {
+        return championService.findByChampion(findChampionRequest);
     }
 
 }

@@ -1,8 +1,8 @@
 package com.deux.duohaeduo.service;
 
 import com.deux.duohaeduo.dto.ChampionPayload;
-import com.deux.duohaeduo.dto.request.ChampionRequest;
-import com.deux.duohaeduo.dto.response.ChampionResponse;
+import com.deux.duohaeduo.dto.request.FindChampionRequest;
+import com.deux.duohaeduo.dto.response.FindChampionResponse;
 import com.deux.duohaeduo.repository.ChampionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,12 +21,12 @@ public class ChampionService {
     private final ChampionRepository championRepository;
 
     @Transactional(readOnly = true)
-    public ChampionResponse findByChampion(ChampionRequest championRequest) {
-        List<ChampionPayload> champions = championRepository.findByChampionType(championRequest.getRecommendItems().get(FIRST_INDEX))
+    public FindChampionResponse findByChampion(FindChampionRequest findChampionRequest) {
+        List<ChampionPayload> champions = championRepository.findByChampionType(findChampionRequest.getAnswers().get(FIRST_INDEX))
                 .stream().map(ChampionPayload::from).collect(Collectors.toList());
-        champions.forEach(champion -> champion.verifyKeyword(championRequest.getRecommendItems()));
+        champions.forEach(champion -> champion.verifyKeyword(findChampionRequest.getAnswers()));
         champions.sort(Comparator.comparingInt(ChampionPayload::getKeywordCount).reversed());
-        return ChampionResponse.from(getChampions(findMaximumKeywordChampions(champions)));
+        return FindChampionResponse.from(getChampions(findMaximumKeywordChampions(champions)));
     }
 
     /**
@@ -38,7 +38,7 @@ public class ChampionService {
     private int verifyMaximumKeywordCount(List<ChampionPayload> championPayloads) {
         return championPayloads.stream()
                 .mapToInt(ChampionPayload::getKeywordCount)
-                .max().orElseThrow(() -> new IllegalArgumentException("리스트에 값이 없다."));
+                .max().orElseThrow(() -> new IllegalArgumentException("조회된 챔피언이 없습니다."));
     }
 
     /**
