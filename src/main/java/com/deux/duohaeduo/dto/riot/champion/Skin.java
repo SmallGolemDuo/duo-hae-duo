@@ -18,4 +18,11 @@ public class Skin {
     @JsonProperty("chromas")
     private boolean chromas;
 
+    @JsonProperty("url")
+    private String url;
+
+    public void saveUrl(String skinUrl) {
+        this.url = skinUrl;
+    }
+
 }

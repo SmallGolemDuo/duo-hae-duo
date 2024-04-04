@@ -4,6 +4,7 @@ import com.deux.duohaeduo.dto.Account;
 import com.deux.duohaeduo.dto.FindGameMemberInfo;
 import com.deux.duohaeduo.dto.SummonerData;
 import com.deux.duohaeduo.dto.riot.champion.Empty;
+import com.deux.duohaeduo.dto.riot.champion.Skin;
 import com.deux.duohaeduo.dto.riot.matchInfo.Converter;
 import com.deux.duohaeduo.dto.riot.matchInfo.SummonerMatchInfo;
 import com.deux.duohaeduo.excpetion.riotApi.AccountNotFoundException;
@@ -178,7 +179,7 @@ public class RiotService {
                     .bodyToMono(Empty.class)
                     .block();
             if (empty == null) {
-                throw new RuntimeException("RIOT 데이터가 없습니다.");
+                throw new RuntimeException("라이엇 데이터가 없습니다.");
             }
             return empty;
         } catch (WebClientResponseException.NotFound e) {
@@ -186,6 +187,10 @@ public class RiotService {
         } catch (Exception e) {
             throw new RuntimeException("알 수 없는 오류가 발생했습니다.", e);
         }
+    }
+
+    public String getChampionSkinUrl(String championName, Skin skin) {
+        return "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + championName + "_" + skin.getNum() + ".jpg";
     }
 
 }
