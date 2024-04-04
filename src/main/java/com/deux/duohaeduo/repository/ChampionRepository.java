@@ -11,4 +11,6 @@ public interface ChampionRepository extends JpaRepository<Champion, Long> {
 
     List<Champion> findByChampionType(String championType);
 
+    List<Champion> findAllByOrderByChampionNameKorAsc();
+
 }

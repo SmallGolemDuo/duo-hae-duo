@@ -2,6 +2,7 @@ package com.deux.duohaeduo.service;
 
 import com.deux.duohaeduo.dto.ChampionPayload;
 import com.deux.duohaeduo.dto.request.FindChampionRequest;
+import com.deux.duohaeduo.dto.response.FindAllChampionResponse;
 import com.deux.duohaeduo.dto.response.FindChampionResponse;
 import com.deux.duohaeduo.repository.ChampionRepository;
 import lombok.RequiredArgsConstructor;
@@ -65,6 +66,12 @@ public class ChampionService {
         }
         Collections.shuffle(championPayloads);
         return championPayloads.subList(FIRST_INDEX, MIN_CHAMPIONS_REQUIRED);
+    }
+
+    public List<FindAllChampionResponse> findAll() {
+        return championRepository.findAllByOrderByChampionNameKorAsc()
+                .stream().map(FindAllChampionResponse::from)
+                .collect(Collectors.toList());
     }
 
 }
