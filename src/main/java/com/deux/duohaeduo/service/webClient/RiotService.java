@@ -31,6 +31,8 @@ import java.util.List;
 @Service
 public class RiotService {
 
+    private static final String RIOT_VERSION = "14.7.1";
+
     @Value("${riot.api_key_j}")
     private String riotApiKeyJ;
 
@@ -188,7 +190,7 @@ public class RiotService {
     public Empty getChampionInfo(String championName) {
         try {
             Empty empty = webClient.get()
-                    .uri("https://ddragon.leagueoflegends.com/cdn/14.7.1/data/ko_KR/champion/" + championName + ".json")
+                    .uri("https://ddragon.leagueoflegends.com/cdn/" + RIOT_VERSION + "/data/ko_KR/champion/" + championName + ".json")
                     .retrieve()
                     .bodyToMono(Empty.class)
                     .block();
@@ -205,6 +207,10 @@ public class RiotService {
 
     public String getChampionSkinUrl(String championName, Skin skin) {
         return "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + championName + "_" + skin.getNum() + ".jpg";
+    }
+
+    public String getChampionIconUrl(String championName) {
+        return "https://ddragon.leagueoflegends.com/cdn/" + RIOT_VERSION + "/img/champion/" + championName + ".png";
     }
 
 }

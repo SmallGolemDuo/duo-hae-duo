@@ -14,11 +14,14 @@ public class FindAllChampionResponse {
 
     private final String championNameEng;
 
+    private final String championIconUrl;
+
     public static FindAllChampionResponse from(Champion champion) {
         return FindAllChampionResponse.builder()
                 .id(champion.getId())
                 .championNameKor(champion.getChampionNameKor())
                 .championNameEng(champion.getChampionNameEng())
+                .championIconUrl(champion.getChampionIconUrl())
                 .build();
     }
 

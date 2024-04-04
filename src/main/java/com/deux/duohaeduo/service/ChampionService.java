@@ -6,6 +6,7 @@ import com.deux.duohaeduo.dto.response.FindAllChampionResponse;
 import com.deux.duohaeduo.dto.response.FindByChampionSkinsResponse;
 import com.deux.duohaeduo.dto.response.FindChampionResponse;
 import com.deux.duohaeduo.dto.riot.champion.Empty;
+import com.deux.duohaeduo.entity.Champion;
 import com.deux.duohaeduo.repository.ChampionRepository;
 import com.deux.duohaeduo.service.webClient.RiotService;
 import lombok.RequiredArgsConstructor;
@@ -76,8 +77,11 @@ public class ChampionService {
 
     @Transactional(readOnly = true)
     public List<FindAllChampionResponse> findAll() {
-        return championRepository.findAllByOrderByChampionNameKorAsc()
-                .stream().map(FindAllChampionResponse::from)
+        List<Champion> champions = championRepository.findAllByOrderByChampionNameKorAsc();
+        champions.forEach(champion ->
+                champion.saveChampionIconUrl(riotService.getChampionIconUrl(champion.getChampionNameEng())));
+        return champions.stream()
+                .map(FindAllChampionResponse::from)
                 .collect(Collectors.toList());
     }
 
