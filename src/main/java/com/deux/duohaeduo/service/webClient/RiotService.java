@@ -3,23 +3,27 @@ package com.deux.duohaeduo.service.webClient;
 import com.deux.duohaeduo.dto.Account;
 import com.deux.duohaeduo.dto.FindGameMemberInfo;
 import com.deux.duohaeduo.dto.SummonerData;
-import com.deux.duohaeduo.dto.matchInfo.Converter;
-import com.deux.duohaeduo.dto.matchInfo.SummonerMatchInfo;
+import com.deux.duohaeduo.dto.riot.champion.Empty;
+import com.deux.duohaeduo.dto.riot.matchInfo.Converter;
+import com.deux.duohaeduo.dto.riot.matchInfo.SummonerMatchInfo;
 import com.deux.duohaeduo.excpetion.riotApi.AccountNotFoundException;
 import com.deux.duohaeduo.excpetion.riotApi.GameDetailedMatchNotFoundException;
 import com.deux.duohaeduo.excpetion.riotApi.GameMatchNotFoundException;
 import com.deux.duohaeduo.excpetion.riotApi.GameUserInfoNotFoundException;
 import com.deux.duohaeduo.service.cache.CacheService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class RiotService {
 
@@ -164,6 +168,24 @@ public class RiotService {
         }
 
         return matchInfoList;
+    }
+
+    public Empty getChampionInfo(String championName) {
+        try {
+            Empty empty = webClient.get()
+                    .uri("https://ddragon.leagueoflegends.com/cdn/14.7.1/data/ko_KR/champion/" + championName + ".json")
+                    .retrieve()
+                    .bodyToMono(Empty.class)
+                    .block();
+            if (empty == null) {
+                throw new RuntimeException("RIOT 데이터가 없습니다.");
+            }
+            return empty;
+        } catch (WebClientResponseException.NotFound e) {
+            throw new RuntimeException("올바른 URI 가 아닙니다.", e);
+        } catch (Exception e) {
+            throw new RuntimeException("알 수 없는 오류가 발생했습니다.", e);
+        }
     }
 
 }
