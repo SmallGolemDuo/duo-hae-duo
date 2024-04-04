@@ -81,8 +81,17 @@ public class ChampionService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 챔피언 상세 조회
+     *
+     * @param championName 챔피언 이름
+     * @return 챔피언 상세 정보
+     */
     public FindByChampionSkinsResponse findByChampionSkins(String championName) {
         Empty championInfo = riotService.getChampionInfo(championName);
+        championInfo.getData().getChampionInfo().getSkins()
+                .forEach(skin ->
+                        skin.saveUrl(riotService.getChampionSkinUrl(championName, skin)));
         return FindByChampionSkinsResponse.from(championInfo.getData().getChampionInfo());
     }
 
