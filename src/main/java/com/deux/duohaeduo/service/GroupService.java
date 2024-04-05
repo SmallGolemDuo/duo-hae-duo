@@ -13,6 +13,7 @@ import com.deux.duohaeduo.dto.response.FindByIdGroupResponse;
 import com.deux.duohaeduo.dto.response.FindGroupInfoResponse;
 import com.deux.duohaeduo.entity.Group;
 import com.deux.duohaeduo.entity.GroupMember;
+import com.deux.duohaeduo.enums.GameModes;
 import com.deux.duohaeduo.enums.SummonerSpells;
 import com.deux.duohaeduo.excpetion.group.GroupMemberCountExceedException;
 import com.deux.duohaeduo.excpetion.group.GroupMemberNotFoundException;
@@ -62,10 +63,10 @@ public class GroupService {
 
             FindGameMemberInfo findGameMemberInfo = riotService.findRiotGameMemberInfo(nickname, tag, gameMemberCount, matchCount);
             gameMemberCount++;
-            convertedRiotDatas.add(convertRiotSummonerInfo(findGameMemberInfo));
+            convertedRiotDatas.add(convertRiotSummonerInfo(findGameMemberInfo, nickname, tag));
         }
 
-        return new FindGroupInfoResponse(convertedRiotDatas);
+        return new FindGroupInfoResponse(group.getGroupName(), convertedRiotDatas);
     }
 
     // 그룹 만들기 + 게임유저 추가
@@ -131,15 +132,12 @@ public class GroupService {
     }
 
 
-    // 날짜, 게임 모드, 게임 시간, 검색자아이템, 게임참가사람들 닉네임과 챔피언 승패여부, 킬뎃어시, 스팰
     @Transactional
-    public ConvertedRiotData convertRiotSummonerInfo(FindGameMemberInfo findGameMemberInfo) throws JSONException {
+    public ConvertedRiotData convertRiotSummonerInfo(FindGameMemberInfo findGameMemberInfo, String nickname, String tag) throws JSONException {
         JSONObject jsonUserInfo = new JSONObject(findGameMemberInfo.getUserInfo());
 
         SearchSummonerInfo searchSummonerInfo = null;
 
-        // 프로필 데이터
-        String name = jsonUserInfo.getString("name"); // 검색 된 소환사명
         String summonerLevel = jsonUserInfo.getString("summonerLevel"); // 검색 된 소환사레벨
         String profileIconId = jsonUserInfo.getString("profileIconId"); // 검색 된 소환사 프로필 id
 
@@ -153,18 +151,20 @@ public class GroupService {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
             String gameCreatedDate = simpleDateFormat.format(date);
 
-            String gameMode = summonerMatchInfo.getInfo().getGameMode(); // 게임 모드
+            // 추가 코드 이넘도 추가
+            String gameMode = GameModes.findById(summonerMatchInfo.getInfo().getQueueID()); // 게임 모드
+
             String gameTotalTime = String.valueOf(Math.floor(summonerMatchInfo.getInfo().getGameDuration() / 60f)); // 게임 진행 시간
 
             for (Participant participant : summonerMatchInfo.getInfo().getParticipants()) { // 10명
 
-                String championName = participant.getChampionName(); // 챔피언 이름
+                String championName = findFiddlesticks(participant.getChampionName()); // 챔피언 이름
                 String participantName = participant.getRiotIDGameName(); // 소환사명
                 boolean isWin = participant.getWin(); // 팀을 나누기 위한 승패여부
 
-                if (name.equals(participant.getRiotIDGameName())) { // 검색 된 소환사 기준 찾기
+                if (nickname.equals(participant.getRiotIDGameName()) && tag.equals(participant.getRiotIDTagline())) { // 검색 된 소환사 기준 찾기
 
-                    String searchChampionName = participant.getChampionName();
+                    String searchChampionName = findFiddlesticks(participant.getChampionName());
 
                     List<Long> items = List.of( // 아이템 아이템이 0이면 없는 것
                             participant.getItem0(),
@@ -213,11 +213,19 @@ public class GroupService {
 
         }
         return ConvertedRiotData.builder()
-                .summonerName(name)
+                .summonerName(nickname)
                 .summonerLevel(summonerLevel)
                 .profileIconId(profileIconId)
                 .matchInfos(matchInfos)
                 .build();
+    }
+
+    // 라이엇 제공 피들스틱 네임 오류 수정
+    private String findFiddlesticks(String championName) {
+        if (championName.equals("FiddleSticks")) {
+            return "Fiddlesticks";
+        }
+        return championName;
     }
 
 }
