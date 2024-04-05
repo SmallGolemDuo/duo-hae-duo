@@ -1,19 +1,18 @@
-import {useEffect, useState} from "react";
-import axios from "axios";
+import React from 'react';
+import {Routes, Route} from 'react-router-dom';
+import Home from './components/Home';
+import Recommendations from './components/Recommendations';
+import RecommendResults from './components/RecommendResults';
+import Skins from './components/Skins';
 
 function App() {
-    const [hello, setHello] = useState('');
-
-    useEffect(() => {
-        axios.get('/api/test')
-            .then((res) => {
-                setHello(res.data);
-            })
-    }, []);
     return (
-        <div className="App">
-            백엔드 데이터 : {hello}
-        </div>
+        <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/recommendations" element={<Recommendations/>}/>
+            <Route path="/recommendResults" element={<RecommendResults/>}/>
+            <Route path="/skins" element={<Skins/>}/>
+        </Routes>
     );
 }
 
