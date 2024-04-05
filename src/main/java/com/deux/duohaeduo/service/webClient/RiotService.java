@@ -17,7 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -153,6 +156,10 @@ public class RiotService {
 
             if (gameMatchDetailed != null) {
                 SummonerMatchInfo matchInfo = Converter.fromJsonString(gameMatchDetailed);
+
+                if (isOlderThanThreeYears(new Date(matchInfo.getInfo().getGameCreation()))) {
+                    continue;
+                }
                 matchInfoList.add(matchInfo);
             }
 
@@ -164,6 +171,13 @@ public class RiotService {
         }
 
         return matchInfoList;
+    }
+
+    // 3년 이상 된 데이터 여부 확인 메서드
+    private boolean isOlderThanThreeYears(Date date) {
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate currentDate = LocalDate.now();
+        return localDate.plusYears(3).isBefore(currentDate);
     }
 
 }
