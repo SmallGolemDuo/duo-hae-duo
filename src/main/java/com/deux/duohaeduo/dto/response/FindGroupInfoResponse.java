@@ -14,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class FindGroupInfoResponse {
 
+    private String groupName;
     private Set<ConvertedRiotData> findGroupMemberInfos;
 
 }
