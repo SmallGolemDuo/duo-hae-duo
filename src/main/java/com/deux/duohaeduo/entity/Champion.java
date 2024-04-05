@@ -3,6 +3,7 @@ package com.deux.duohaeduo.entity;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import lombok.*;
+import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Getter
@@ -30,5 +31,12 @@ public class Champion {
     private String skillDetails;
 
     private String position;
+
+    @URL
+    private String championIconUrl;
+
+    public void saveChampionIconUrl(String championIconUrl) {
+        this.championIconUrl = championIconUrl;
+    }
 
 }

@@ -1,8 +1,8 @@
 package com.deux.duohaeduo.service;
 
 import com.deux.duohaeduo.dto.*;
-import com.deux.duohaeduo.dto.matchInfo.Participant;
-import com.deux.duohaeduo.dto.matchInfo.SummonerMatchInfo;
+import com.deux.duohaeduo.dto.riot.matchInfo.Participant;
+import com.deux.duohaeduo.dto.riot.matchInfo.SummonerMatchInfo;
 import com.deux.duohaeduo.dto.request.AddGroupMemberRequest;
 import com.deux.duohaeduo.dto.request.CreateGroupRequest;
 import com.deux.duohaeduo.dto.request.DeleteGroupMemberRequest;

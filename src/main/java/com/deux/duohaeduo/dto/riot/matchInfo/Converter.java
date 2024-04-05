@@ -1,4 +1,4 @@
-package com.deux.duohaeduo.dto.matchInfo;
+package com.deux.duohaeduo.dto.riot.matchInfo;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

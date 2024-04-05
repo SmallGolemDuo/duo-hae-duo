@@ -3,18 +3,22 @@ package com.deux.duohaeduo.service.webClient;
 import com.deux.duohaeduo.dto.Account;
 import com.deux.duohaeduo.dto.FindGameMemberInfo;
 import com.deux.duohaeduo.dto.SummonerData;
-import com.deux.duohaeduo.dto.matchInfo.Converter;
-import com.deux.duohaeduo.dto.matchInfo.SummonerMatchInfo;
+import com.deux.duohaeduo.dto.riot.champion.Empty;
+import com.deux.duohaeduo.dto.riot.champion.Skin;
+import com.deux.duohaeduo.dto.riot.matchInfo.Converter;
+import com.deux.duohaeduo.dto.riot.matchInfo.SummonerMatchInfo;
 import com.deux.duohaeduo.excpetion.riotApi.AccountNotFoundException;
 import com.deux.duohaeduo.excpetion.riotApi.GameDetailedMatchNotFoundException;
 import com.deux.duohaeduo.excpetion.riotApi.GameMatchNotFoundException;
 import com.deux.duohaeduo.excpetion.riotApi.GameUserInfoNotFoundException;
 import com.deux.duohaeduo.service.cache.CacheService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -23,8 +27,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @Service
 public class RiotService {
+
+    private static final String RIOT_VERSION = "14.7.1";
 
     @Value("${riot.api_key_j}")
     private String riotApiKeyJ;
@@ -178,6 +185,32 @@ public class RiotService {
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate currentDate = LocalDate.now();
         return localDate.plusYears(3).isBefore(currentDate);
+    }
+
+    public Empty getChampionInfo(String championName) {
+        try {
+            Empty empty = webClient.get()
+                    .uri("https://ddragon.leagueoflegends.com/cdn/" + RIOT_VERSION + "/data/ko_KR/champion/" + championName + ".json")
+                    .retrieve()
+                    .bodyToMono(Empty.class)
+                    .block();
+            if (empty == null) {
+                throw new RuntimeException("라이엇 데이터가 없습니다.");
+            }
+            return empty;
+        } catch (WebClientResponseException.NotFound e) {
+            throw new RuntimeException("올바른 URI 가 아닙니다.", e);
+        } catch (Exception e) {
+            throw new RuntimeException("알 수 없는 오류가 발생했습니다.", e);
+        }
+    }
+
+    public String getChampionSkinUrl(String championName, Skin skin) {
+        return "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + championName + "_" + skin.getNum() + ".jpg";
+    }
+
+    public String getChampionIconUrl(String championName) {
+        return "https://ddragon.leagueoflegends.com/cdn/" + RIOT_VERSION + "/img/champion/" + championName + ".png";
     }
 
 }

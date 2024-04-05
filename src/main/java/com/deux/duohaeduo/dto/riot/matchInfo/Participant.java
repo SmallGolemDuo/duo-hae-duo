@@ -1,7 +1,7 @@
-package com.deux.duohaeduo.dto.matchInfo;
+package com.deux.duohaeduo.dto.riot.matchInfo;
 
-import com.deux.duohaeduo.dto.matchInfo.enums.IndividualPosition;
-import com.deux.duohaeduo.dto.matchInfo.enums.Lane;
+import com.deux.duohaeduo.dto.riot.matchInfo.enums.IndividualPosition;
+import com.deux.duohaeduo.dto.riot.matchInfo.enums.Lane;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Map;

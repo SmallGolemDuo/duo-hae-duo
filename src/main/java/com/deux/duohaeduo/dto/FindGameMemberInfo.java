@@ -1,6 +1,6 @@
 package com.deux.duohaeduo.dto;
 
-import com.deux.duohaeduo.dto.matchInfo.SummonerMatchInfo;
+import com.deux.duohaeduo.dto.riot.matchInfo.SummonerMatchInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

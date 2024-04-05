@@ -1,7 +1,7 @@
 package com.deux.duohaeduo.service.cache;
 
 import com.deux.duohaeduo.dto.SummonerData;
-import com.deux.duohaeduo.dto.matchInfo.SummonerMatchInfo;
+import com.deux.duohaeduo.dto.riot.matchInfo.SummonerMatchInfo;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.RequiredArgsConstructor;
