@@ -2,4 +2,4 @@ spring:
   profiles:
     include:
       - h2
-      - jpa
+#      - jpa

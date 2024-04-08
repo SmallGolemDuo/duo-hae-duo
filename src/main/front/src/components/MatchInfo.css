@@ -1,0 +1,350 @@
+/* MatchInfo.css */
+
+.single-background {
+    /*width: 100%;*/
+    /*height: 100vh;*/
+    /*background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%);*/
+    background: rgb(40, 55, 70);
+    background-blend-mode: multiply;
+    /*background-position: 0 0;*/
+    /*!*background-size: cover; !* 배경 이미지를 화면에 꽉 차도록 설정 *!*!*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*flex-direction: column;*/
+    /*position: relative;*/
+}
+
+.error-alert {
+    background-color: #f44336; /* 빨간색 배경 */
+    color: white; /* 흰색 글자 */
+    padding: 10px; /* 내부 여백 */
+    margin-bottom: 10px; /* 아래쪽 여백 */
+}
+
+
+.profile {
+    z-index: 1;
+    position: absolute;
+    margin-top: -250px;
+    background-color: #5d5959;
+    left: -5px;
+    right: 0;
+    width: 1440px;
+    height: 200px;
+    border: 2px solid #9987eb;
+
+    background-image: linear-gradient(to right, rgb(23, 13, 13) 0%, rgba(255, 255, 255, 0.1) 35%, rgba(255, 255, 255, 0.1) 65%, rgb(23, 13, 13) 100%), url('https://i0.wp.com/5ergiveaways.com/wp-content/uploads/2020/03/BG-5.png');
+
+
+    background-size: cover; /* 배경 이미지를 요소에 맞게 확장합니다. */
+    background-position: center; /* 배경 이미지를 가운데 정렬합니다. */
+
+}
+
+
+/* 매치 정보 컨테이너는 세로 방향으로 아이템을 배치합니다. */
+.match-info-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 300px;
+}
+
+
+/* 매치 정보는 하단에 여백을 가집니다. */
+.match-info {
+    margin-bottom: 20px;
+
+    border-radius: 40px; /* 테두리를 둥글게 만듭니다. */
+    overflow: hidden; /* 테두리를 넘어가는 부분을 숨깁니다. */
+
+}
+
+/* 승리 - 파란색 배경에 흰색 글자가 나타납니다. */
+.blue-bg {
+    /*background: linear-gradient(-225deg, #473B7B 0%, #3584A7 51%, #30D2BE 100%);*/
+    color: black; /* 글자색을 흰색으로 설정 */
+    padding: 10px;
+    border: 5px solid #5b81e1; /* 테두리 추가 및 색상 지정 */
+
+}
+
+/* 패배 - 핑크색 배경에 검정색 글자가 나타납니다. */
+.pink-bg {
+    /*background: linear-gradient(to right, #ed6ea0 0%, #ec8c69 100%);*/
+    color: black; /* 글자색을 검정색으로 설정 */
+    padding: 10px;
+
+    border: 5px solid #b74a4a; /* 테두리 추가 및 색상 지정 */
+}
+
+
+/* 게임 상자는 세로 방향으로 아이템을 배치하고 테두리와 여백이 있습니다. */
+.game-box {
+    display: flex;
+
+    /*컨테이너의 주 축을 세로 방향으로 설정하여 그 안의 요소들이 위에서 아래로 쌓이도록 함*/
+    flex-direction: column;
+
+    /*데이터 테두리 컬러, 굵기*/
+    /*border: 1px solid #170d0d;*/
+    /*데이터 간격*/
+    margin-bottom: 10px;
+
+}
+
+
+/* 게임 정보 컨테이너는 좌우 정렬 및 수직 가운데 정렬이 이루어집니다. */
+.game-info-container {
+    display: flex;
+    justify-content: space-between; /* 왼쪽과 오른쪽에 각각 요소 배치 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+
+/* 게임 정보 승패 여부, 날짜, 모드, 게임진행시간 */
+.game-info {
+    margin-bottom: 10px; /* 하단 여백 */
+    font-weight: bold; /* 글씨 두껍게 */
+}
+
+/* 결과 정보는 좌우 정렬 및 수직 가운데 정렬이 이루어집니다. */
+.result-info {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between; /* 왼쪽과 오른쪽에 각각 요소 배치 */
+    align-items: center; /* 수직 가운데 정렬 */
+
+}
+
+
+.result-info > * {
+    flex: 0 0 auto; /* 너비를 자동으로 계산하지 않고 고정으로 유지 */
+    margin: 0 5px; /* 요소 사이의 간격을 조절 */
+}
+
+
+/*첫번째 요소 공간 설정*/
+.result-info > *:first-child {
+    flex: 0 0 20%; /* 첫 번째 요소는 컨테이너의 20% 너비를 가지도록 설정합니다. */
+}
+
+/*두번째 요소 공간 설정*/
+.result-info > *:nth-child(2) {
+    flex: 0 0 25%; /* 두 번째 요소는 컨테이너의 60% 너비를 가지도록 설정합니다. */
+}
+
+/*세번째 요소 공간 설정*/
+.result-info > *:not(:last-child) {
+    /*flex: 1; !* 가운데 요소를 제외한 다른 요소들은 컨테이너의 공간을 동일하게 나눕니다. *!*/
+    margin: 0 5px; /* 요소 사이의 간격을 조절 */
+}
+
+/* 마지막 요소의 오른쪽 마진을 0으로 설정하여 끝에 붙도록 조절 */
+.result-info > :last-child {
+    flex: 0 0 25%; /* 가운데 요소는 컨테이너의 20% 너비를 가지도록 설정합니다. */
+    margin-left: auto; /* 가운데 요소를 왼쪽으로 이동합니다. */
+    margin-right: 0;
+}
+
+
+/* 팀 목록은 가로로 배치되며 오른쪽에 정렬됩니다. */
+.team-list {
+    display: flex;
+    flex-direction: row; /* 팀 목록을 가로로 배치 */
+    justify-content: flex-end;
+}
+
+/* 팀은 왼쪽으로부터 최대한 멀리 배치됩니다. */
+.team {
+    margin-right: auto;
+}
+
+/* 팀 컨테이너는 가로로 나란히 표시되어야합니다. */
+.teams-container {
+    display: flex; /* 팀을 가로로 나란히 배치하기 위해 Flexbox를 사용합니다. */
+    flex-direction: row; /* Flexbox의 주축 방향을 가로로 설정합니다. */
+    font-weight: bold;
+
+}
+
+/* 참가자 목록은 목록 표시가 없으며 텍스트가 넘칠 경우 생략 부호로 표시됩니다. */
+
+.participants {
+    margin-right: 10px;
+
+    list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+    text-overflow: ellipsis; /* 넘치는 텍스트를 ...으로 표시 */
+    white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
+    /*margin: 0; !* 기본 마진 제거 *!*/
+}
+
+/*이긴 팀, 진 팀, 텍스트 관리*/
+.participants li {
+    width: 150px; /* 적절한 너비로 설정 */
+    overflow: hidden; /* 너비를 벗어나는 텍스트를 숨깁니다. */
+    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정합니다. */
+    text-overflow: ellipsis; /* 너비를 벗어나는 텍스트는 생략 부호로 표시됩니다. */
+    margin-bottom: 5px; /* 항목 간의 간격을 조정합니다. */
+}
+
+
+/*MachInfo.css*/
+
+.participant-info {
+    display: flex;
+    align-items: center;
+    position: relative; /* 팝오버 위치 설정을 위해 position을 relative로 지정합니다. */
+}
+
+/* 팝오버 상태 변경 */
+.participant-info:hover .popover {
+    display: block; /* 마우스 오버 시 팝오버를 보이게 합니다. */
+}
+
+/* 팝오버 스타일 */
+.popover {
+    position: absolute; /* 절대 위치 지정 */
+    top: -120%; /* 원하는 위치로 조절 (상대적인 위치 지정) */
+    left: 50%; /* 가운데 정렬 */
+    transform: translateX(-50%); /* 수평 가운데 정렬 */
+    background-color: rgba(0, 0, 0, 0.8); /* 배경색 */
+    color: #fff; /* 텍스트 색상 */
+    padding: 5px; /* 내부 여백 */
+    border-radius: 5px; /* 테두리 반경 */
+    z-index: 1; /* 다른 요소 위에 표시되도록 설정 */
+    width: max-content; /* 내용에 맞게 너비 조정 */
+}
+
+/* 팝오버 내부의 텍스트 스타일링 */
+.popover-text {
+    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정합니다. */
+    overflow: hidden; /* 텍스트를 넘어가는 부분을 숨깁니다. */
+}
+
+
+.participant-info img {
+    margin-right: 10px; /* 이미지와 텍스트 사이의 간격을 조정합니다. */
+}
+
+
+/* 게임 구분선은 위쪽 여백이 있습니다. */
+.game-separator {
+    border: none;
+    border-top: 1px solid black;
+    margin: 20px 0;
+}
+
+.item-images {
+    display: flex;
+    margin-top: 10px;
+}
+
+.item-images > img {
+    margin-right: 3px; /* 아이템 간의 간격을 조절할 마진을 설정합니다. */
+    border-radius: 8px; /* 테두리를 둥글게 만듭니다. */
+    overflow: hidden; /* 테두리를 넘어가는 부분을 숨깁니다. */
+}
+
+/*아이템을 없을때*/
+.empty-item {
+    width: 35px;
+    height: 35px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* 아이템 간격 */
+    margin-right: 3px;
+
+    border-radius: 8px; /* 테두리를 둥글게 만듭니다. */
+    overflow: hidden; /* 테두리를 넘어가는 부분을 숨깁니다. */
+}
+
+/*챔피언사진 옆 스팰 위아래 위치하고, 킬뎃데스 정렬*/
+.champion-spell-container {
+    display: flex;
+    align-items: center;
+    /* 세로 중앙 정렬 */
+}
+
+/*챔피언 이미지*/
+.champion-images {
+    border-radius: 20px; /* 테두리를 둥글게 만듭니다. */
+    overflow: hidden; /* 테두리를 넘어가는 부분을 숨깁니다. */
+}
+
+/*스펠 이미지*/
+.spell-images {
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px; /* 챔피언 이미지와 간격을 조정 */
+
+    border-radius: 20px; /* 테두리를 둥글게 만듭니다. */
+    overflow: hidden; /* 테두리를 넘어가는 부분을 숨깁니다. */
+}
+
+.spell-images > img {
+    margin-top: 3px; /* 아이템 간의 간격을 조절할 마진을 설정합니다. */
+    border-radius: 8px; /* 테두리를 둥글게 만듭니다. */
+    overflow: hidden; /* 테두리를 넘어가는 부분을 숨깁니다. */
+}
+
+
+.win-text {
+    color: blue; /* 승리일 때 텍스트 색상을 파란색으로 설정 */
+    font-size: 20px;
+}
+
+.lose-text {
+    color: #882222; /* 패배일 때 텍스트 색상을 빨간색으로 설정 */
+    font-size: 20px;
+}
+
+
+/*킬 뎃 어시 글씨 굵게*/
+.game-stats {
+    font-weight: bold; /* 글씨 두껍게 */
+}
+
+/*킬 뎃 어시 중 데스는 빨간색으로 표시*/
+.deaths {
+    color: red; /* 빨간색으로 설정 */
+}
+
+
+.single-input-text input {
+    position: relative;
+    top: 25px;
+    right: 1px;
+    bottom: 15%;
+    width: 850px; /* 원하는 가로 길이로 설정하세요 */
+    height: 30px;
+    padding-right: 30px;
+}
+
+/*.single-search-icon {*/
+/*    position: absolute;*/
+/*    top: 28px;*/
+/*    bottom: 15.5%;*/
+/*    right: 29%; !* 오른쪽 여백을 조정하여 텍스트 박스와 아이콘이 겹치지 않게 합니다. *!*/
+/*    width: 30px; !* 아이콘의 너비 *!*/
+/*    height: 30px; !* 아이콘의 높이 *!*/
+/*    background-image: url('https://cdn-icons-png.flaticon.com/128/2319/2319177.png'); !* 돋보기 아이콘 이미지 경로를 지정하세요. *!*/
+/*    background-size: cover;*/
+/*    cursor: pointer; !* 마우스 커서를 포인터로 변경하여 클릭 가능한 상태를 나타냅니다. *!*/
+
+
+/*}*/
+
+
+
+
+
+
+
+
+
