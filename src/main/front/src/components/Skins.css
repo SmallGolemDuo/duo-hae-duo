@@ -17,12 +17,7 @@
     text-align: center;
 }
 
-.champions-select-box {
-
-}
-
 .champion-grid {
-    margin-top: 5%;
     border: 4px solid #9987eb;
     border-radius: 30px;
     display: grid;
@@ -32,6 +27,8 @@
     height: 50%;
     background-size: cover;
     background-position: center;
+    max-width: 80%; /* 최대 너비 설정 */
+    margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
 }
 
 .champion-box {
@@ -51,7 +48,15 @@ a {
     color: inherit;
 }
 
-.champion-icon{
+.champion-icon {
     width: 50%;
     height: 50%;
+    margin-top: 10px;
+}
+
+/* 챔피언 검색 창 */
+.search-bar {
+    margin-top: 5%;
+    margin-left: 10%;
+    margin-bottom: 3%;
 }
