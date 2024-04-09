@@ -227,19 +227,19 @@ const Single = () => {
                                                     <div className="champion-spell-container">
                                                         <div className="champion-images">
                                                             <img
-                                                                src={"https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/" + matchInfo.searchSummonerInfo.championName + ".png"}
+                                                                src={"https://ddragon.leagueoflegends.com/cdn/14.7.1/img/champion/" + matchInfo.searchSummonerInfo.championName + ".png"}
                                                                 alt="이미지"
                                                                 style={{width: '80px', height: '80px'}}
                                                             />
                                                         </div>
                                                         <div className="spell-images">
                                                             <img
-                                                                src={"https://ddragon.leagueoflegends.com/cdn/14.4.1/img/spell/" + matchInfo.searchSummonerInfo.spell1 + ".png"}
+                                                                src={"https://ddragon.leagueoflegends.com/cdn/14.7.1/img/spell/" + matchInfo.searchSummonerInfo.spell1 + ".png"}
                                                                 alt="이미지"
                                                                 style={{width: '40px', height: '40px'}}
                                                             />
                                                             <img
-                                                                src={"https://ddragon.leagueoflegends.com/cdn/14.4.1/img/spell/" + matchInfo.searchSummonerInfo.spell2 + ".png"}
+                                                                src={"https://ddragon.leagueoflegends.com/cdn/14.7.1/img/spell/" + matchInfo.searchSummonerInfo.spell2 + ".png"}
                                                                 alt="이미지"
                                                                 style={{width: '40px', height: '40px'}}
                                                             />
@@ -279,7 +279,7 @@ const Single = () => {
                                                             <li key={index}>
                                                                 <div className="participant-info">
                                                                     <img
-                                                                        src={"https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/" + participant.championName + ".png"}
+                                                                        src={"https://ddragon.leagueoflegends.com/cdn/14.7.1/img/champion/" + participant.championName + ".png"}
                                                                         alt="챔피언 이미지"
                                                                         style={{width: '20px', height: '20px'}}
                                                                     />
@@ -306,7 +306,7 @@ const Single = () => {
                                                             <li key={index}>
                                                                 <div className="participant-info">
                                                                     <img
-                                                                        src={"https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/" + participant.championName + ".png"}
+                                                                        src={"https://ddragon.leagueoflegends.com/cdn/14.7.1/img/champion/" + participant.championName + ".png"}
                                                                         alt="챔피언 이미지"
                                                                         style={{width: '20px', height: '20px'}}
                                                                     />

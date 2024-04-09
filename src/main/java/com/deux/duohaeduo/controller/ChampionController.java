@@ -27,9 +27,10 @@ public class ChampionController {
         return championService.findAll();
     }
 
-    @GetMapping("/{championName}/skins")
-    public FindByChampionSkinsResponse findByChampionSkins(@PathVariable String championName) {
-        return championService.findByChampionSkins(championName);
+    @GetMapping("/{championNameEng}/skins")
+    public FindByChampionSkinsResponse findByChampionSkins(@PathVariable String championNameEng) {
+        System.out.println("여기 호출 됌!!!!!!!!!");
+        return championService.findByChampionSkins(championNameEng);
     }
 
 }
