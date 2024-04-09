@@ -1,5 +1,96 @@
+server:
+  port: 8080
+
 spring:
+  application:
+    name: duo-hae-duo
+
+  sql:
+    init:
+      data-locations:
+        - classpath:/import.sql
+
   profiles:
-    include:
-      - h2
-#      - jpa
+    active: local-h2
+
+riot:
+  api_key_j: RGAPI-a1296769-d4c3-46fd-aa3c-242cdf6a35af
+  api_key_w: RGAPI-22f5dce1-6534-4fad-bbc1-f85c4f102d60
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local-h2
+  h2:
+    console:
+      enabled: true  # H2 Console? ???? ?? (H2 Console? H2 Database? UI? ????? ??)
+      path: /h2-console  # H2 Console? Path
+  # Database Setting Info (Database? H2? ???? ?? H2?? ?? ??)
+  datasource:
+    driver-class-name: org.h2.Driver  # Database? H2? ?????.
+    url: jdbc:h2:~/test;mode=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE; # H2 ?? ??
+    username: sa  # H2 ?? ? ??? username ?? (??? ??? ??)
+    password:  # H2 ?? ? ??? password ?? (??? ??? ??)
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    show-sql: true
+    generate-ddl: true
+    open-in-view: false
+  logging:
+    level:
+      org:
+        hibernate:
+          SQL: DEBUG
+          type:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local-mysql
+  datasource:
+    url: jdbc:mysql://localhost:3306/duo_hae_duo?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: tjddnr12
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://duo-hae-duo.cp8wmy6yqbvs.ap-northeast-2.rds.amazonaws.com:3306/duo-hae-duo?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: admin
+    password: admin1234
+  jpa:
+    properties:
+      hibernate:
+        connection:
+          charset: UTF-8
+          useUnicode: true
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+sql:
+  init:
+    encoding: UTF-8
