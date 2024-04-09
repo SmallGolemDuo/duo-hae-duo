@@ -42,3 +42,4 @@ out/
 
 ### front ###
 node_modules
+/resources/static/static/
