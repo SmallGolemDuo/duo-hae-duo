@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import './Skins.css';
 import {Link} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
+
 
 function Skins() {
     const [champions, setChampions] = useState([]);
@@ -22,6 +24,17 @@ function Skins() {
         fetchData();
     }, []);
 
+    // const handleChampionClick = (championNameEng) => {
+    //     fetch(`/api/lol/champions/${championNameEng}/skins`)
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             return <Navigate to={`/champion/${championNameEng}/skins`}/>;
+    //         })
+    //         .catch((error) => {
+    //             console.error("챔피언 스킨 정보를 가져오는 중 오류 발생:", error);
+    //         });
+    // };
+
     const filteredChampions = champions.filter(champion =>
         champion.championNameKor.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -32,11 +45,17 @@ function Skins() {
                 <h1 style={{
                     color: 'white'
                 }}>스킨 갤러리</h1>
-                <a href="/" className="home-redirect-icon">
+                <a href="/" className="home-redirect-icon" style={{
+                    marginLeft: '-75%',
+                    marginTop: '0'
+                }}>
                     <img
                         src={"https://image.shutterstock.com/image-vector/letters-duo-joint-logo-icon-250nw-1113311357.jpg"}
                         alt="home_icon"
-                        style={{marginTop: '2%'}}
+                        style={{
+                            width: '100px',
+                            height: '100px',
+                        }}
                     />
                 </a>
             </div>
@@ -47,7 +66,6 @@ function Skins() {
                 }}>
                     챔피언 검색 :
                 </label>
-
                 <input
                     type="text"
                     id="champion-search"
@@ -60,48 +78,50 @@ function Skins() {
                     }}
                 />
             </div>
-            <div className="champion-grid">
-                {searchTerm === '' ? (
-                    // 검색어가 비어 있을 때 모든 챔피언을 보여줍니다.
-                    champions.map(champion => (
-                        <Link to={`/champion/${champion.id}`} key={champion.id} className="champion-box">
-                            <img
-                                src={champion.championIconUrl}
-                                alt={champion.championNameKor}
-                                className="champion-icon"
-                                style={{
-                                    width: '40%',
-                                    height: '40%',
-                                    border: '2px solid #9987eb',
-                                    borderRadius: '5px',
-                                }}
-                            />
-                            <div className="champion-name">
-                                {champion.championNameKor}
-                            </div>
-                        </Link>
-                    ))
-                ) : (
-                    // 검색어가 입력되었을 때 검색된 챔피언만 보여줍니다.
-                    filteredChampions.map(champion => (
-                        <Link to={`/champion/${champion.id}`} key={champion.id} className="champion-box">
-                            <img
-                                src={champion.championIconUrl}
-                                alt={champion.championNameKor}
-                                className="champion-icon"
-                                style={{
-                                    width: '40%',
-                                    height: '40%',
-                                    border: '2px solid #9987eb',
-                                    borderRadius: '5px'
-                                }}
-                            />
-                            <div className="champion-name">
-                                {champion.championNameKor}
-                            </div>
-                        </Link>
-                    ))
-                )}
+            <div className="champion-grid-owner" style={{height: '100vh'}}>
+                <div className="champion-grid" style={{height: '70%', overflowY: 'auto'}}>
+                    {searchTerm === '' ? (
+                        champions.map(champion => (
+                            <Link to={`/champion/${champion.championNameEng}`} key={champion.championNameEng}
+                                  className="champion-box">
+                                <img
+                                    src={champion.championIconUrl}
+                                    alt={champion.championNameKor}
+                                    className="champion-icon"
+                                    style={{
+                                        width: '40%',
+                                        height: '40%',
+                                        border: '2px solid #9987eb',
+                                        borderRadius: '5px',
+                                    }}
+                                />
+                                <div className="champion-name">
+                                    {champion.championNameKor}
+                                </div>
+                            </Link>
+                        ))
+                    ) : (
+                        filteredChampions.map(champion => (
+                            <Link to={`/champion/${champion.championNameEng}`} key={champion.championNameEng}
+                                  className="champion-box">
+                                <img
+                                    src={champion.championIconUrl}
+                                    alt={champion.championNameKor}
+                                    className="champion-icon"
+                                    style={{
+                                        width: '40%',
+                                        height: '40%',
+                                        border: '2px solid #9987eb',
+                                        borderRadius: '5px'
+                                    }}
+                                />
+                                <div className="champion-name">
+                                    {champion.championNameKor}
+                                </div>
+                            </Link>
+                        ))
+                    )}
+                </div>
             </div>
         </div>
     );

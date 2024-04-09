@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 import "./RecommendResult.css";
 
@@ -36,14 +36,20 @@ function RecommendResults() {
     }
     return (
         <div className="recommend-result-background">
-            <div className="home-redirect-icon">
-                <a href="/">
-                    <img
-                        src={"https://image.shutterstock.com/image-vector/letters-duo-joint-logo-icon-250nw-1113311357.jpg"}
-                        alt="home_icon"
-                    />
-                </a>
-            </div>
+            <a href="/" className="home-redirect-icon" style={{
+                position: "fixed",
+                left: "8%",
+                top: "3%",
+            }}>
+                <img
+                    src={"https://image.shutterstock.com/image-vector/letters-duo-joint-logo-icon-250nw-1113311357.jpg"}
+                    alt="home_icon"
+                    style={{
+                        width: '100px',
+                        height: '100px',
+                    }}
+                />
+            </a>
             <div className="background-image"></div>
             <div className="champion-image-center-box">
                 {champions.championPayloads.slice(0, 3).map((champion, index) => (

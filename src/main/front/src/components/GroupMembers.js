@@ -110,19 +110,19 @@ const GroupMembers = () => {
                                                                 <div className="group-champion-spell-container">
                                                                     <div className="group-champion-images">
                                                                         <img
-                                                                            src={"https://ddragon.leagueoflegends.com/cdn/14.4.1/img/champion/" + gameData.searchSummonerInfo.championName + ".png"}
+                                                                            src={"https://ddragon.leagueoflegends.com/cdn/14.7.1/img/champion/" + gameData.searchSummonerInfo.championName + ".png"}
                                                                             alt="이미지"
                                                                             style={{width: '40px', height: '40px'}}
                                                                         />
                                                                     </div>
                                                                     <div className="group-spell-images">
                                                                         <img
-                                                                            src={"https://ddragon.leagueoflegends.com/cdn/14.4.1/img/spell/" + gameData.searchSummonerInfo.spell1 + ".png"}
+                                                                            src={"https://ddragon.leagueoflegends.com/cdn/14.7.1/img/spell/" + gameData.searchSummonerInfo.spell1 + ".png"}
                                                                             alt="이미지"
                                                                             style={{width: '20px', height: '20px'}}
                                                                         />
                                                                         <img
-                                                                            src={"https://ddragon.leagueoflegends.com/cdn/14.4.1/img/spell/" + gameData.searchSummonerInfo.spell2 + ".png"}
+                                                                            src={"https://ddragon.leagueoflegends.com/cdn/14.7.1/img/spell/" + gameData.searchSummonerInfo.spell2 + ".png"}
                                                                             alt="이미지"
                                                                             style={{width: '20px', height: '20px'}}
                                                                         />
@@ -142,7 +142,7 @@ const GroupMembers = () => {
                                                                         ) : (
                                                                             <img
                                                                                 key={index}
-                                                                                src={`https://ddragon.leagueoflegends.com/cdn/14.4.1/img/item/${item}.png`}
+                                                                                src={`https://ddragon.leagueoflegends.com/cdn/14.7.1/img/item/${item}.png`}
                                                                                 alt="이미지"
                                                                                 style={{width: '20px', height: '20px'}}
                                                                             />

@@ -7,6 +7,7 @@ import {Routes, Route} from 'react-router-dom';
 import Recommendations from './components/Recommendations';
 import RecommendResults from './components/RecommendResults';
 import Skins from './components/Skins';
+// import ChampionSkinsInfo from './components/ChampionSkinsInfo';
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/recommendations" element={<Recommendations/>}/>
             <Route path="/recommendResults" element={<RecommendResults/>}/>
             <Route path="/skins" element={<Skins/>}/>
+            {/*<Route path="/champions/:championNameEng/skins" element={<ChampionSkinsInfo/>}/>*/}
         </Routes>
     );
 }

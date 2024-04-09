@@ -34,7 +34,7 @@ function Home() {
 
     return (
         <div className="home-background">
-            <div className="home-content">
+            <div className="home-comment">
                 <h1>듀오해듀오</h1>
                 <p>듀오해듀오를 통해 그룹 조회 및 챔피언 추천등 다양한 컨텐츠를 확인해보세요.</p>
             </div>
