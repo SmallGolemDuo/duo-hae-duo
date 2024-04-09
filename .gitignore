@@ -26,6 +26,7 @@ bin/
 *.log
 *.sql
 *.yml
+/src/main/resources/application.yml
 
 out/
 !**/src/main/**/out/
