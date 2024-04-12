@@ -90,11 +90,11 @@ task installReact(type: Exec) {
     inputs.dir "$frontendDir"
     group = BasePlugin.BUILD_GROUP
     if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-        commandLine "npm.cmd", "audit", "fix"
-        commandLine 'npm.cmd', 'install'
+        commandLine "npm.cmd", "audit", "fix", 'install' // 하나의 commandLine에 모든 명령어를 넣음
     } else {
-        commandLine "npm", "audit", "fix" commandLine 'npm', 'install'
+        commandLine "npm", "audit", "fix", 'install' // 하나의 commandLine에 모든 명령어를 넣음
     }
+
 }
 
 task buildReact(type: Exec) {
@@ -107,10 +107,11 @@ task buildReact(type: Exec) {
     } else {
         commandLine "npm", "run-script", "build"
     }
+
 }
 
 task copyReactBuildFiles(type: Copy) {
-    dependsOn "buildReact"
     from "$frontendDir/build"
     into "$projectDir/src/main/resources/static"
 }
+
