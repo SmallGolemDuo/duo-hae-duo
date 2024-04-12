@@ -1,0 +1,62 @@
+.skin-gallery-background {
+    background-color: #243743;
+    background-blend-mode: multiply;
+}
+
+
+.home-redirect-icon img{
+    display: block;
+    align-items: center;
+}
+
+.banner-container {
+    padding-top: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.champion-grid {
+    border: 4px solid #9987eb;
+    border-radius: 30px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    justify-items: center;
+    width: 100%;
+    height: 50%;
+    background-size: cover;
+    background-position: center;
+    max-width: 80%; /* 최대 너비 설정 */
+    margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
+}
+
+.champion-box {
+    width: 80%;
+    margin: auto;
+}
+
+.champion-name {
+    margin-top: 5px;
+    color: white;
+    font-size: 60%;
+    overflow: hidden; /* 넘친 부분을 숨김 */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.champion-icon {
+    width: 50%;
+    height: 50%;
+    margin-top: 10px;
+}
+
+/* 챔피언 검색 창 */
+.search-bar {
+    margin-top: 5%;
+    margin-left: 10%;
+    margin-bottom: 3%;
+}

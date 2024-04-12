@@ -25,6 +25,8 @@ bin/
 *.ipr
 *.log
 *.sql
+*.yml
+/src/main/resources/application.yml
 
 out/
 !**/src/main/**/out/
@@ -39,3 +41,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### front ###
+node_modules
+/resources/static/static/
