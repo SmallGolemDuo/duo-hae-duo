@@ -29,7 +29,6 @@ public class ChampionController {
 
     @GetMapping("/{championNameEng}/skins")
     public FindByChampionSkinsResponse findByChampionSkins(@PathVariable String championNameEng) {
-        System.out.println("여기 호출 됌!!!!!!!!!");
         return championService.findByChampionSkins(championNameEng);
     }
 

@@ -34,6 +34,7 @@
 .champion-box {
     width: 80%;
     margin: auto;
+    padding-top: 10%;
 }
 
 .champion-name {
