@@ -24,7 +24,7 @@ const GroupList = () => {
 
     // 그룹 정보 가져오는 함수
     const fetchGroupDetail = (groupId) => {
-        fetch(`http://localhost:8080/api/lol/groups/${groupId}`, {
+        fetch(`/api/lol/groups/${groupId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ const GroupList = () => {
 
         // 확인이면 삭제 요청 보내기
         if (isConfirmed) {
-            fetch(`http://localhost:8080/api/lol/groups/group-members`, {
+            fetch(`/api/lol/groups/group-members`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ const GroupList = () => {
             return; // 추가 요청을 보내지 않고 함수를 종료합니다.
         }
 
-        fetch(`http://localhost:8080/api/lol/groups/group-members`, {
+        fetch(`/api/lol/groups/group-members`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -166,7 +166,7 @@ const GroupList = () => {
         // groupName과 gameMembers를 서버로 전송하여 그룹 생성 요청 보내는 로직을 구현할 수 있음
 
         // 예시: 그룹 생성 요청 보내기
-        fetch('http://localhost:8080/api/lol/groups', {
+        fetch('/api/lol/groups', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -198,7 +198,7 @@ const GroupList = () => {
 
     // 그룹 리스트를 가져오는 함수
     const fetchGroups = () => {
-        fetch('http://localhost:8080/api/lol/groups')
+        fetch('/api/lol/groups')
             .then((response) => response.json())
             .then((data) => {
                 setGroups(data);
@@ -208,7 +208,7 @@ const GroupList = () => {
     };
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/lol/groups')
+        fetch('/api/lol/groups')
             .then((response) => response.json())
             .then((data) => {
                 setGroups(data);
@@ -221,7 +221,7 @@ const GroupList = () => {
         const isConfirmed = window.confirm(`정말로 해당 그룹을 삭제하시겠습니까?`);
 
         if (isConfirmed) {
-            fetch('http://localhost:8080/api/lol/groups', {
+            fetch('/api/lol/groups', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

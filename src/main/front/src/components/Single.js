@@ -56,7 +56,7 @@ const Single = () => {
 
     const fetchData = (playerName) => {
         setLoading(true); // 데이터 요청 전에 로딩 상태를 true로 설정
-        fetch('http://localhost:8080/api/lol/singles', {
+        fetch('/api/lol/singles', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
