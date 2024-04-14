@@ -8,7 +8,7 @@ const GroupMembers = () => {
     const [groupMembers, setGroupMembers] = useState([]);
 
     const fetchGroupMembers = () => {
-        fetch(`http://localhost:8080/api/lol/groups/group-infos/${groupId}`, {
+        fetch(`/api/lol/groups/group-infos/${groupId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
