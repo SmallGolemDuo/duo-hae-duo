@@ -82,7 +82,7 @@ function Skins() {
                 <div className="champion-grid" style={{height: '70%', overflowY: 'auto'}}>
                     {searchTerm === '' ? (
                         champions.map(champion => (
-                            <Link to={`/champion/${champion.championNameEng}`} key={champion.championNameEng}
+                            <Link to={`/champions/${champion.championNameEng}/skins`} key={champion.championNameEng}
                                   className="champion-box">
                                 <img
                                     src={champion.championIconUrl}
@@ -102,7 +102,7 @@ function Skins() {
                         ))
                     ) : (
                         filteredChampions.map(champion => (
-                            <Link to={`/champion/${champion.championNameEng}`} key={champion.championNameEng}
+                            <Link to={`/champions/${champion.championNameEng}/skins`} key={champion.championNameEng}
                                   className="champion-box">
                                 <img
                                     src={champion.championIconUrl}
