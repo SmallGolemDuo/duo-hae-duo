@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './Skins.css';
 import {Link} from 'react-router-dom';
-import {Navigate} from 'react-router-dom';
-
 
 function Skins() {
     const [champions, setChampions] = useState([]);
@@ -23,17 +21,6 @@ function Skins() {
     useEffect(() => {
         fetchData();
     }, []);
-
-    // const handleChampionClick = (championNameEng) => {
-    //     fetch(`/api/lol/champions/${championNameEng}/skins`)
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             return <Navigate to={`/champion/${championNameEng}/skins`}/>;
-    //         })
-    //         .catch((error) => {
-    //             console.error("챔피언 스킨 정보를 가져오는 중 오류 발생:", error);
-    //         });
-    // };
 
     const filteredChampions = champions.filter(champion =>
         champion.championNameKor.toLowerCase().includes(searchTerm.toLowerCase())
