@@ -62,7 +62,7 @@ const GroupMembers = () => {
             ) : (
                 <>
                     {groupMembers.length === 0 ? (
-                        <div className="groupMembers-message">No group members found.</div>
+                        <div className="groupMembers-message">닉네임을 다시 한번 확인해주세요.</div>
                     ) : (
                         <div className="groupMembers-matchInfo-container">
                             <div className="group-name">
