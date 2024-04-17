@@ -8,6 +8,7 @@ import Recommendations from './components/Recommendations';
 import RecommendResults from './components/RecommendResults';
 import Skins from './components/Skins';
 import ChampionSkinsInfo from './components/ChampionSkinsInfo';
+import PatchNote from "./components/PatchNote";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/recommendResults" element={<RecommendResults/>}/>
             <Route path="/skins" element={<Skins/>}/>
             <Route path="/champions/:championNameEng/skins" element={<ChampionSkinsInfo/>}/>
+            <Route path="/patch-notes" element={<PatchNote/>}/>
         </Routes>
     );
 }
