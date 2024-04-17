@@ -32,6 +32,11 @@ function Home() {
         navigate('/skins');
     }
 
+    // 패치 노트 페이지
+    function handlePatchNotes() {
+        navigate('/patch-notes');
+    }
+
     return (
         <div className="home-background">
             <div className="home-comment">
@@ -57,6 +62,9 @@ function Home() {
                 <button className="home-button" onClick={handleGroups}>그룹 관리</button>
                 <button className="home-button" onClick={handleRecommendations}>챔피언 추천 테스트</button>
                 <button className="home-button" onClick={handleSkins}>스킨 갤러리</button>
+            </div>
+            <div className="home-button-location-2">
+                <button className="home-button-patch" onClick={handlePatchNotes}>패치 노트</button>
             </div>
         </div>
     );
