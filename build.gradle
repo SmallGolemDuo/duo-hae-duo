@@ -54,6 +54,9 @@ dependencies {
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+    // 크롤링
+    implementation 'org.jsoup:jsoup:1.17.2'
+
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly "org.mariadb.jdbc:mariadb-java-client"
