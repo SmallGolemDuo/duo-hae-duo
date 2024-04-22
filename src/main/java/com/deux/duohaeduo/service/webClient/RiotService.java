@@ -3,6 +3,8 @@ package com.deux.duohaeduo.service.webClient;
 import com.deux.duohaeduo.dto.Account;
 import com.deux.duohaeduo.dto.FindGameMemberInfo;
 import com.deux.duohaeduo.dto.SummonerData;
+import com.deux.duohaeduo.dto.RotationChampionPayload;
+import com.deux.duohaeduo.dto.riot.champion.ChampionInfos;
 import com.deux.duohaeduo.dto.riot.champion.Empty;
 import com.deux.duohaeduo.dto.riot.champion.Skin;
 import com.deux.duohaeduo.dto.riot.matchInfo.Converter;
@@ -31,7 +33,7 @@ import java.util.List;
 @Service
 public class RiotService {
 
-    private static final String RIOT_VERSION = "14.7.1";
+    private static final String RIOT_VERSION = "14.8.1";
 
     @Value("${riot.api_key_j}")
     private String riotApiKeyJ;
@@ -187,7 +189,7 @@ public class RiotService {
         return localDate.plusYears(3).isBefore(currentDate);
     }
 
-    public Empty getChampionInfo(String championName) {
+    public Empty getDetailChampionInfo(String championName) {
         try {
             Empty empty = webClient.get()
                     .uri("https://ddragon.leagueoflegends.com/cdn/" + RIOT_VERSION + "/data/ko_KR/champion/" + championName + ".json")
@@ -211,6 +213,39 @@ public class RiotService {
 
     public String getChampionIconUrl(String championName) {
         return "https://ddragon.leagueoflegends.com/cdn/" + RIOT_VERSION + "/img/champion/" + championName + ".png";
+    }
+
+    public ChampionInfos getAllChampionInfo() {
+        try {
+            ChampionInfos championInfos = webClient.get()
+                    .uri("https://ddragon.leagueoflegends.com/cdn/" + RIOT_VERSION + "/data/ko_KR/champion.json")
+                    .retrieve()
+                    .bodyToMono(ChampionInfos.class)
+                    .block();
+            if (championInfos == null) {
+                throw new RuntimeException("라이엇 데이터가 없습니다.");
+            }
+            return championInfos;
+        } catch (WebClientResponseException e) {
+            throw new RuntimeException("올바른 URI 가 아닙니다.", e);
+        }
+    }
+
+    public RotationChampionPayload getRotationChampions() {
+        try {
+            RotationChampionPayload rotationChampion = webClient.get()
+                    .uri("https://kr.api.riotgames.com/lol/platform/v3/champion-rotations")
+                    .header("X-Riot-Token", riotApiKeyW)
+                    .retrieve()
+                    .bodyToMono(RotationChampionPayload.class)
+                    .block();
+            if (rotationChampion == null) {
+                throw new RuntimeException("라이엇 데이터가 없습니다.");
+            }
+            return rotationChampion;
+        } catch (WebClientResponseException e) {
+            throw new RuntimeException("올바른 URI 가 아닙니다.", e);
+        }
     }
 
 }
