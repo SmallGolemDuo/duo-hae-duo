@@ -3,8 +3,12 @@ package com.deux.duohaeduo.service;
 import com.deux.duohaeduo.dto.ChampionPayload;
 import com.deux.duohaeduo.dto.request.FindChampionRequest;
 import com.deux.duohaeduo.dto.response.FindAllChampionResponse;
+import com.deux.duohaeduo.dto.RotationChampionPayload;
+import com.deux.duohaeduo.dto.response.FindAllRotationChampionsResponse;
 import com.deux.duohaeduo.dto.response.FindByChampionSkinsResponse;
 import com.deux.duohaeduo.dto.response.FindChampionResponse;
+import com.deux.duohaeduo.dto.riot.champion.ChampionInfos;
+import com.deux.duohaeduo.dto.riot.champion.Datum;
 import com.deux.duohaeduo.dto.riot.champion.Empty;
 import com.deux.duohaeduo.entity.Champion;
 import com.deux.duohaeduo.repository.ChampionRepository;
@@ -92,11 +96,30 @@ public class ChampionService {
      * @return 챔피언 상세 정보
      */
     public FindByChampionSkinsResponse findByChampionSkins(String championName) {
-        Empty championInfo = riotService.getChampionInfo(championName);
+        Empty championInfo = riotService.getDetailChampionInfo(championName);
         championInfo.getData().getChampionInfo().getSkins()
                 .forEach(skin ->
                         skin.saveUrl(riotService.getChampionSkinUrl(championName, skin)));
         return FindByChampionSkinsResponse.from(championInfo.getData().getChampionInfo());
+    }
+
+    /**
+     * 로테이션 챔피언 조회
+     *
+     * @return 로테이션 챔피언 이름 반환
+     */
+    public FindAllRotationChampionsResponse findAllRotationChampion() {
+        // 로테이션 챔피언 라이엇 조회
+        RotationChampionPayload rotationChampionsKeys = riotService.getRotationChampions();
+        Set<String> rotationChampionKey = new HashSet<>(rotationChampionsKeys.getFreeChampionIds());
+        // 챔피언 정보 전체 조회
+        ChampionInfos allChampionInfo = riotService.getAllChampionInfo();
+        List<String> rotationChampionNames = new ArrayList<>();
+        allChampionInfo.getData().values().stream()
+                .filter(champion -> rotationChampionKey.contains(champion.getKey()))
+                .sorted(Comparator.comparing(Datum::getName)).map(Datum::getName)
+                .forEach(rotationChampionNames::add);
+        return FindAllRotationChampionsResponse.from(rotationChampionNames);
     }
 
 }

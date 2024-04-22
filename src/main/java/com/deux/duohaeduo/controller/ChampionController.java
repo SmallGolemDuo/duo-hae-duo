@@ -2,6 +2,7 @@ package com.deux.duohaeduo.controller;
 
 import com.deux.duohaeduo.dto.request.FindChampionRequest;
 import com.deux.duohaeduo.dto.response.FindAllChampionResponse;
+import com.deux.duohaeduo.dto.response.FindAllRotationChampionsResponse;
 import com.deux.duohaeduo.dto.response.FindByChampionSkinsResponse;
 import com.deux.duohaeduo.dto.response.FindChampionResponse;
 import com.deux.duohaeduo.service.ChampionService;
@@ -30,6 +31,11 @@ public class ChampionController {
     @GetMapping("/{championNameEng}/skins")
     public FindByChampionSkinsResponse findByChampionSkins(@PathVariable String championNameEng) {
         return championService.findByChampionSkins(championNameEng);
+    }
+
+    @GetMapping("/rotations")
+    public FindAllRotationChampionsResponse findAllRotationChampion() {
+        return championService.findAllRotationChampion();
     }
 
 }
