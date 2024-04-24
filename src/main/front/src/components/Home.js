@@ -37,6 +37,11 @@ function Home() {
         navigate('/patch-notes');
     }
 
+    // 패치 노트 페이지
+    function handleRotationChampions() {
+        navigate('/rotation-champions');
+    }
+
     return (
         <div className="home-background">
             <div className="home-comment">
@@ -65,6 +70,7 @@ function Home() {
             </div>
             <div className="home-button-location-2">
                 <button className="home-button-patch" onClick={handlePatchNotes}>패치 노트</button>
+                <button className="home-button-patch" onClick={handleRotationChampions}>로테이션 챔피언</button>
             </div>
         </div>
     );
