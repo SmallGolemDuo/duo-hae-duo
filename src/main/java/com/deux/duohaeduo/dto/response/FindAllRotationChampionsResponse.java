@@ -1,5 +1,6 @@
 package com.deux.duohaeduo.dto.response;
 
+import com.deux.duohaeduo.entity.Champion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,11 +14,12 @@ import java.util.List;
 @AllArgsConstructor
 public class FindAllRotationChampionsResponse {
 
-    private List<String> rotationChampionNames;
+    private List<Champion> rotationChampions;
 
-    public static FindAllRotationChampionsResponse from(List<String> rotationChampionNames) {
+    public static FindAllRotationChampionsResponse from(List<Champion> rotationChampions) {
         return FindAllRotationChampionsResponse.builder()
-                .rotationChampionNames(rotationChampionNames)
+                .rotationChampions(rotationChampions)
                 .build();
     }
+
 }

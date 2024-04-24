@@ -35,8 +35,14 @@ public class Champion {
     @URL
     private String championIconUrl;
 
-    public void saveChampionIconUrl(String championIconUrl) {
+    private String championRiotKey;
+
+    public void addChampionIconUrl(String championIconUrl) {
         this.championIconUrl = championIconUrl;
+    }
+
+    public void addChampionRiotKey(String championRiotKey) {
+        this.championRiotKey = championRiotKey;
     }
 
 }

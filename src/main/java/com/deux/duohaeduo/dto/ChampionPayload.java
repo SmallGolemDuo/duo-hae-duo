@@ -35,6 +35,10 @@ public class ChampionPayload {
 
     private int keywordCount;
 
+    private String championIconUrl;
+
+    private String championRiotKey;
+
     public static ChampionPayload from(Champion champion) {
         return ChampionPayload.builder()
                 .id(champion.getId())
@@ -47,6 +51,8 @@ public class ChampionPayload {
                 .ultimateType(champion.getUltimateType())
                 .skillDetails(champion.getSkillDetails())
                 .position(champion.getPosition())
+                .championIconUrl(champion.getChampionIconUrl())
+                .championRiotKey(champion.getChampionRiotKey())
                 .build();
     }
 
