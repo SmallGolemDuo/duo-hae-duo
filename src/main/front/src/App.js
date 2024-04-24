@@ -9,6 +9,7 @@ import RecommendResults from './components/RecommendResults';
 import Skins from './components/Skins';
 import ChampionSkinsInfo from './components/ChampionSkinsInfo';
 import PatchNote from "./components/PatchNote";
+import RotationChampions from "./components/RotationChampions"
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/skins" element={<Skins/>}/>
             <Route path="/champions/:championNameEng/skins" element={<ChampionSkinsInfo/>}/>
             <Route path="/patch-notes" element={<PatchNote/>}/>
+            <Route path="/rotation-champions" element={<RotationChampions/>}/>
         </Routes>
     );
 }
