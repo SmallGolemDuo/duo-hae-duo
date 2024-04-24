@@ -7,7 +7,6 @@ import com.deux.duohaeduo.dto.RotationChampionPayload;
 import com.deux.duohaeduo.dto.response.FindAllRotationChampionsResponse;
 import com.deux.duohaeduo.dto.response.FindByChampionSkinsResponse;
 import com.deux.duohaeduo.dto.response.FindChampionResponse;
-import com.deux.duohaeduo.dto.riot.champion.ChampionInfos;
 import com.deux.duohaeduo.dto.riot.champion.Datum;
 import com.deux.duohaeduo.dto.riot.champion.Empty;
 import com.deux.duohaeduo.entity.Champion;
@@ -15,6 +14,7 @@ import com.deux.duohaeduo.repository.ChampionRepository;
 import com.deux.duohaeduo.service.webClient.RiotService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +28,7 @@ public class ChampionService {
 
     private final static int FIRST_INDEX = 0;
     private final static int MIN_CHAMPIONS_REQUIRED = 3;
+    private static final long INITIAL_DELAY = 3000;
 
     private final RiotService riotService;
     private final ChampionRepository championRepository;
@@ -82,8 +83,6 @@ public class ChampionService {
     @Transactional(readOnly = true)
     public List<FindAllChampionResponse> findAll() {
         List<Champion> champions = championRepository.findAllByOrderByChampionNameKorAsc();
-        champions.forEach(champion ->
-                champion.saveChampionIconUrl(riotService.getChampionIconUrl(champion.getChampionNameEng())));
         return champions.stream()
                 .map(FindAllChampionResponse::from)
                 .collect(Collectors.toList());
@@ -109,17 +108,30 @@ public class ChampionService {
      * @return 로테이션 챔피언 이름 반환
      */
     public FindAllRotationChampionsResponse findAllRotationChampion() {
-        // 로테이션 챔피언 라이엇 조회
         RotationChampionPayload rotationChampionsKeys = riotService.getRotationChampions();
-        Set<String> rotationChampionKey = new HashSet<>(rotationChampionsKeys.getFreeChampionIds());
-        // 챔피언 정보 전체 조회
-        ChampionInfos allChampionInfo = riotService.getAllChampionInfo();
-        List<String> rotationChampionNames = new ArrayList<>();
-        allChampionInfo.getData().values().stream()
-                .filter(champion -> rotationChampionKey.contains(champion.getKey()))
-                .sorted(Comparator.comparing(Datum::getName)).map(Datum::getName)
-                .forEach(rotationChampionNames::add);
-        return FindAllRotationChampionsResponse.from(rotationChampionNames);
+        List<Champion> rotationChampions = championRepository.findAll()
+                .stream()
+                .filter(champion ->
+                        rotationChampionsKeys.getFreeChampionIds().contains(champion.getChampionRiotKey()))
+                .toList();
+        return FindAllRotationChampionsResponse.from(rotationChampions);
+    }
+
+    @Transactional
+    @Scheduled(initialDelay = INITIAL_DELAY, fixedRate = Long.MAX_VALUE)
+    public void saveChampionInfo() {
+        List<Champion> champions = championRepository.findAll();
+        Map<String, String> championInfos = riotService.getAllChampionInfo().getData().values().stream()
+                .collect(Collectors.toMap(Datum::getId, Datum::getKey));
+        champions.forEach(champion -> {
+            champion.addChampionIconUrl(riotService.getChampionIconUrl(champion.getChampionNameEng()));
+            // Riot Key 저장
+            championInfos.entrySet().stream()
+                    .filter(entry -> entry.getKey().equals(champion.getChampionNameEng()))
+                    .findFirst()
+                    .ifPresent(entry -> champion.addChampionRiotKey(entry.getValue()));
+        });
+        championRepository.saveAll(champions);
     }
 
 }
