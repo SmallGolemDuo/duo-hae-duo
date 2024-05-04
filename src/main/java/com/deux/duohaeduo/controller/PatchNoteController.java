@@ -18,7 +18,7 @@ public class PatchNoteController {
     private final PatchNoteService patchNoteService;
 
     @GetMapping
-    public List<PatchNoteResponse> crawlPatchNotices() throws IOException {
+    public List<PatchNoteResponse> findAllPatchNotes() throws IOException {
         return patchNoteService.findAllPatchNotes();
     }
 
