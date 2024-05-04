@@ -30,6 +30,8 @@ public class PostPayload {
 
     private List<CommentPayload> commentPayloads;
 
+    private long commentsCount;
+
     public static PostPayload from(Post post) {
         return PostPayload.builder()
                 .id(post.getId())
@@ -42,6 +44,7 @@ public class PostPayload {
                 .commentPayloads(post.getComments().stream()
                         .map(CommentPayload::from)
                         .collect(Collectors.toList()))
+                .commentsCount(post.getComments().size())
                 .build();
     }
 
