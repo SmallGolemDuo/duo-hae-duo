@@ -42,13 +42,17 @@ function Home() {
         navigate('/rotation-champions');
     }
 
+    // 패치 노트 페이지
+    function handleVideoPosts() {
+        navigate('/video-posts');
+    }
+
     return (
         <div className="home-background">
             <div className="home-comment">
                 <h1>듀오해듀오</h1>
                 <p>듀오해듀오를 통해 그룹 조회 및 챔피언 추천등 다양한 컨텐츠를 확인해보세요.</p>
             </div>
-
 
             <form onSubmit={handleSubmit}> {/* 폼 제출 시 handleSubmit 함수를 호출합니다. */}
                 <div className="home-input-text">
@@ -71,6 +75,7 @@ function Home() {
             <div className="home-button-location-2">
                 <button className="home-button-patch" onClick={handlePatchNotes}>패치 노트</button>
                 <button className="home-button-patch" onClick={handleRotationChampions}>로테이션 챔피언</button>
+                <button className="home-button-patch" onClick={handleVideoPosts}>영상 게시판</button>
             </div>
         </div>
     );
