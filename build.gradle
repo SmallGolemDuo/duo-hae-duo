@@ -71,7 +71,7 @@ tasks.named('test') {
 }
 
 // 'copyPrivate' 작업을 올바르게 정의
-tasks.register('copyPrivate') {
+tasks.register('copyPrivate', Copy) {
     copy {
         from './duo-hae-duo-prod'
         include "*.yml"
