@@ -72,12 +72,10 @@ tasks.named('test') {
 
 // 'copyPrivate' 작업을 올바르게 정의
 tasks.register('copyPrivate') {
-    doLast {
-        copy {
-            from './duo-hae-duo-prod'
-            include "*.yml"
-            into 'src/main/resources'
-        }
+    copy {
+        from './duo-hae-duo-prod'
+        include "*.yml"
+        into 'src/main/resources'
     }
 }
 
