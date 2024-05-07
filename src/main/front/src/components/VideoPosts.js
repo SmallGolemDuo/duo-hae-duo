@@ -336,8 +336,8 @@ function VideoPosts() {
                         <input type="text" id="title" name="title" value={postData.title}
                                onChange={handleInputChange}
                                required/>
-                        <label htmlFor="author">작성자 (필수 입력)</label>
-                        <input type="text" id="author" name="nickname" value={postData.nickname}
+                        <label htmlFor="nickname">작성자 (필수 입력)</label>
+                        <input type="text" id="nickname" name="nickname" value={postData.nickname}
                                onChange={handleInputChange} required/>
                         <label htmlFor="password">암호 (3자 이상 필수 입력)</label>
                         <input type="password" id="password" name="password" value={postData.password}
